@@ -101,6 +101,7 @@ const Parallax = (props: ParallaxProps) => {
     <div
       ref={containerRef}
       style={{
+        width: "100%",
         height: `${frame * 100}vh`,
         position: "relative",
       }}

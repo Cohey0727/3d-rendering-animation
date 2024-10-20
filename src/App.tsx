@@ -2,6 +2,7 @@ import React, { Suspense, useLayoutEffect, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
+import "./App.css";
 import { Parallax } from "./components";
 
 type ModelProps = {
@@ -23,12 +24,26 @@ const Model: React.FC<ModelProps> = (props) => {
 
 const App: React.FC = () => {
   return (
-    <div>
-      <Parallax frame={4}>
-        {(progress) => {
-          return (
+    <Parallax frame={4}>
+      {(progress) => {
+        return (
+          <div
+            id="canvas-container"
+            style={{
+              position: "relative",
+              width: "100vw",
+              height: "100vh",
+            }}
+          >
+            {progress}
             <Canvas
-              style={{ width: "100vw", height: "100vh" }}
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+              }}
               camera={{ position: [0, 0, 1000], fov: 75 }}
             >
               <ambientLight intensity={0.5} />
@@ -39,13 +54,24 @@ const App: React.FC = () => {
               <OrbitControls
                 enableZoom={false}
                 enablePan={false}
-                enableRotate={true}
+                enableRotate={false}
               />
             </Canvas>
-          );
-        }}
-      </Parallax>
-    </div>
+            <div
+              id="canvas-overlay"
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                opacity: 0,
+              }}
+            />
+          </div>
+        );
+      }}
+    </Parallax>
   );
 };
 
